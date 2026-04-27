@@ -1,5 +1,15 @@
 {
-  "name": "nataza-api",
+  "name": "garena-registrar-proxy",
   "version": "1.0.0",
-  "type": "module"
+  "type": "module",
+  "description": "Proxy untuk menyembunyikan endpoint asli Garena",
+  "main": "api/registrar.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "keywords": ["proxy", "garena", "vercel"],
+  "author": "",
+  "license": "MIT"
 }
