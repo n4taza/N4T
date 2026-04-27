@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/registrar.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/registrar",
+      "dest": "/api/registrar.js"
+    }
+  ]
+}
