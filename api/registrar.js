@@ -1,18 +1,27 @@
 // api/registrar.js
+// Auth key di-hardcode di sini
+const HARDCODED_AUTH_KEY = "9fKxP2aLz_88sX_NATAZA_2126";
+
 export default async function handler(req, res) {
   // 1. Hanya izinkan metode POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // 2. Verifikasi x-auth-key (PASTIKAN SAMA dengan environment variable di Vercel)
-  const authKey = req.headers['x-auth-key'];
-  if (authKey !== process.env.AUTH_KEY) {
+  // 2. Verifikasi - LANGSUNG CEK dengan hardcoded value
+  //    Client TIDAK PERLU kirim x-auth-key lagi
+  //    Atau bisa tetap cek dari header untuk keamanan tambahan
+  
+  // OPSI A: Tanpa auth dari client (siapa pun bisa akses)
+  // (komentar atau hapus bagian pengecekan auth)
+  
+  // OPSI B: Tetap cek dari header tapi hardcode di sini
+  const clientAuthKey = req.headers['x-auth-key'];
+  if (clientAuthKey !== HARDCODED_AUTH_KEY) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
   try {
-    // 3. 🔥 LINK ASLI DISEMBUNYIKAN - ambil dari environment variable Vercel
     const BASE_URL = process.env.API_BASE_URL;
     if (!BASE_URL) {
       return res.status(500).json({ error: 'API_BASE_URL not configured' });
@@ -20,7 +29,6 @@ export default async function handler(req, res) {
 
     const targetUrl = `${BASE_URL}/oauth/guest/registrar`;
 
-    // 4. Proxy request ke server asli
     const response = await fetch(targetUrl, {
       method: 'POST',
       headers: {
